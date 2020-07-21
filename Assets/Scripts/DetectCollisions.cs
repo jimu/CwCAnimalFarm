@@ -10,7 +10,14 @@ public class DetectCollisions : MonoBehaviour
         if (other.CompareTag("Ammo"))
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            GameManager.instance.AddScore(1);
+        }
+        else if (other.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+            Debug.Log("Game Over (HIT)");
+            Time.timeScale = 0f;
         }
     }
 }

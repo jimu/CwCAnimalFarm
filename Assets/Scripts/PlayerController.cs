@@ -6,19 +6,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    GameManager gm;
 
     int minX = -10, maxX = 10, minZ = -10, maxZ = 10;
 
     [SerializeField] float speed = 10f;
     [SerializeField] float rof = 0.5f;
-    [SerializeField] Transform bulletPrefab;
+    [SerializeField] Transform bulletPrefab = null;
     float cooldown = 0f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameManager.instance;
     }
 
     // Update is called once per frame
@@ -35,7 +36,6 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Hit at " + hit.point);
             transform.LookAt(hit.point);
         }
 
@@ -48,6 +48,13 @@ public class PlayerController : MonoBehaviour
 
     void Fire()
     {
-        var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(transform.forward));
+        if (gm.GetAmmo() > 0)
+        {
+            var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(transform.forward));
+            gm.AddAmmo(-1);
+            transform.Translate(transform.forward * -0.1f);  // recoil
+        }
+        else
+            Debug.Log("Out of ammo");
     }
 }

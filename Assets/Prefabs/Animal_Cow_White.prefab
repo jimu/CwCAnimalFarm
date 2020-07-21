@@ -1539,10 +1539,10 @@ GameObject:
   m_Component:
   - component: {fileID: 522888042825454960}
   - component: {fileID: 522888042818383484}
-  - component: {fileID: 522888044446714324}
-  - component: {fileID: 3645341196043239682}
   - component: {fileID: -3631999023664631400}
   - component: {fileID: -2551165832387781375}
+  - component: {fileID: 522888044446714324}
+  - component: {fileID: 3645341196043239682}
   - component: {fileID: -1685186884206556226}
   m_Layer: 0
   m_Name: Animal_Cow_White
@@ -1550,7 +1550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &522888042825454960
 Transform:
   m_ObjectHideFlags: 0
@@ -1585,31 +1585,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &522888044446714324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522888042825835356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d988dad784b48d94b8d0db5530fa8818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
---- !u!114 &3645341196043239682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522888042825835356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30effe83a0a20a34caad508f11381126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &-3631999023664631400
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1639,6 +1614,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 11.58847, y: 31.234165, z: 47.92845}
   m_Center: {x: 0.2587835, y: 15.1170845, z: 0.1906236}
+--- !u!114 &522888044446714324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522888042825835356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d988dad784b48d94b8d0db5530fa8818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+--- !u!114 &3645341196043239682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522888042825835356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30effe83a0a20a34caad508f11381126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-1685186884206556226
 MonoBehaviour:
   m_ObjectHideFlags: 0
