@@ -19,6 +19,9 @@ public class DestroyOutOfBounds : MonoBehaviour
             transform.position.z < minZ || transform.position.z > maxZ)
         {
             Destroy(gameObject);
+
+            if (gameObject.CompareTag("Enemy"))
+                Debug.Log("GAME OVER");
         }
     }
 }
