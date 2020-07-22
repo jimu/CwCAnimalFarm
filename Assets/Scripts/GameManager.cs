@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AudioClip playerDead;
     [SerializeField] public AudioClip launch;
 
+    [SerializeField] GameObject gameOverPanel = null;
 
     private void Awake()
     {
@@ -50,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int n)
     {
+        // TODO show score animation
+
         SetScore(score + n);
     }
 
@@ -89,10 +93,20 @@ public class GameManager : MonoBehaviour
         if (playerHits <= 0)
         {
             Play(playerDead);
-            Debug.Log("GAME OVER");
-            Time.timeScale = 0f;
+            GameOver();
         }
         else if (playSound)
             Play(playerHurt);
+    }
+
+    void GameOver()
+    {
+        Time.timeScale = 0f;
+        Debug.Log("GAME OVER");
+
+        Text scoreText = gameOverPanel?.transform.Find("ScoreText")?.GetComponent<Text>();
+        if (scoreText != null)
+            scoreText.text = score.ToString();
+        gameOverPanel?.SetActive(true);
     }
 }

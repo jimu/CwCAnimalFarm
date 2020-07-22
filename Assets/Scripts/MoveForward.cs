@@ -21,7 +21,7 @@ public class MoveForward : MonoBehaviour
     {
         if (enemy!= null && enemy.hits <= 0)
             transform.Translate(Vector3.down * Time.deltaTime * downSpeed);
-        else
+        else if (enemy == null || !enemy.eating)
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 }

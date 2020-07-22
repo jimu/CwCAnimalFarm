@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6449193158496892708}
   - component: {fileID: 6449193158503860862}
-  - component: {fileID: -6266267311636539167}
   - component: {fileID: 3862788656351242664}
+  - component: {fileID: -6266267311636539167}
   - component: {fileID: 6449193159526036170}
   - component: {fileID: 3745307870573648362}
   - component: {fileID: 4387091045261453294}
@@ -96,19 +96,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &-6266267311636539167
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6449193158496526706}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.901651, y: 19.309494, z: 19.603945}
-  m_Center: {x: -0.017353686, y: 7.982354, z: 1.1626283}
 --- !u!54 &3862788656351242664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -125,6 +112,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-6266267311636539167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6449193158496526706}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.901651, y: 19.309494, z: 19.603945}
+  m_Center: {x: -0.017353686, y: 7.982354, z: 1.1626283}
 --- !u!114 &6449193159526036170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +192,8 @@ MonoBehaviour:
   maxHits: 1
   speed: 5
   value: 1
+  recoveryTime: 1
+  eating: 0
   hitSound: {fileID: 8300000, guid: 9ff8cb9d71dd20a4b8a14caa5c4e30cd, type: 3}
   killSound: {fileID: 8300000, guid: 9ff8cb9d71dd20a4b8a14caa5c4e30cd, type: 3}
   escapeSound: {fileID: 8300000, guid: 9ff8cb9d71dd20a4b8a14caa5c4e30cd, type: 3}

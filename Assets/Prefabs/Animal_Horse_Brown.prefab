@@ -159,6 +159,8 @@ MonoBehaviour:
   maxHits: 3
   speed: 4
   value: 3
+  recoveryTime: 1
+  eating: 0
   hitSound: {fileID: 8300000, guid: 9f223702d628daf47bc7c810e578638a, type: 3}
   killSound: {fileID: 8300000, guid: fe43c4d7aeb46444e85b7226d085f8c4, type: 3}
   escapeSound: {fileID: 8300000, guid: 758c6a068d1f7c3409208bbd020542d9, type: 3}
