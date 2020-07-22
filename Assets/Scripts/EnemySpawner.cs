@@ -1,51 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-class Pool
-{
-    private GameObject[] pool;
-    private int nextAvailable = 0;
-
-    public Pool(GameObject prefab, int length)
-    {
-        pool = new GameObject[length];
-
-        for (int i = 0; i < length; ++i)
-        {
-            pool[i] = GameObject.Instantiate(prefab);
-        }
-    }
-
-    public GameObject Get()
-    {
-        for (int count = pool.Length; count > 0; count--)
-        {
-            GameObject next = pool[nextAvailable];
-            nextAvailable = (nextAvailable + 1) % pool.Length;
-            if (!next.activeSelf)
-                return next;
-        }
-
-        return null;
-    }
-
-    public GameObject Activate(Vector3 position, Quaternion rotation)
-    {
-        GameObject item = Get();
-        if (item != null)
-        {
-            item.transform.position = position;
-            item.transform.rotation = rotation;
-            item.SetActive(true);
-            return item;
-        }
-
-        return null;
-    }
-
-}
-
 // needs to be a MonoBehavior to use StartCoroutine
 public class EnemySpawner : MonoBehaviour
 {

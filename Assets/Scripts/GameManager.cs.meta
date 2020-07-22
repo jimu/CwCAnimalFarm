@@ -10,12 +10,9 @@ MonoImporter:
   - playerHurt: {fileID: 8300000, guid: 9bc3b0d3d8a4e284a9d046fdfba58748, type: 3}
   - playerDead: {fileID: 8300000, guid: b2f7dda2ab86bdf4e920a5a71b0c760d, type: 3}
   - launch: {fileID: 8300000, guid: e04c5d03bce2edf47a42d01b7c43aa79, type: 3}
-  - animalEscape: {instanceID: 0}
-  - animalHit: {instanceID: 0}
-  - animalDead: {instanceID: 0}
-  - horseFed: {instanceID: 0}
-  - chickenFed: {instanceID: 0}
-  - cowFed: {instanceID: 0}
+  - sfxOutOfAmmo: {fileID: 8300000, guid: 7f2054b1dcaea234b8f8ca338c714f45, type: 3}
+  - pointsGizmoPrefab: {fileID: 7766846401638769351, guid: deb0987d68c251749bccc3d8ca67806a,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

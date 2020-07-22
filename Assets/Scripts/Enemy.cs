@@ -43,10 +43,10 @@ public class Enemy : MonoBehaviour
     {
         hits = Math.Max(0, hits - damage);
 
-
-
         if (hits < 1)
+        {
             SetDying();
+        }
         else if (healthBar != null)
         {
             healthBar.SetHealth(hits * 1f / maxHits);

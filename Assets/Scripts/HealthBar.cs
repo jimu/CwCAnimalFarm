@@ -48,9 +48,12 @@ public class HealthBar : MonoBehaviour
 
     private void OnGUI()
     {
-        Vector2 v1 = camera.WorldToScreenPoint(transform.position + new Vector3(0, height, 0));
-        GUI.DrawTexture(new Rect(v1.x - 16, Screen.height - v1.y - 3 - 5, 32, 7), blackTexture);
-        GUI.DrawTexture(new Rect(v1.x - 15, Screen.height - v1.y - 2 - 5, 30 * health, 5), greenTexture);
+        if (Time.timeScale > 0.01)
+        {
+            Vector2 v1 = camera.WorldToScreenPoint(transform.position + new Vector3(0, height, 0));
+            GUI.DrawTexture(new Rect(v1.x - 16, Screen.height - v1.y - 3 - 5, 32, 7), blackTexture);
+            GUI.DrawTexture(new Rect(v1.x - 15, Screen.height - v1.y - 2 - 5, 30 * health, 5), greenTexture);
+        }
     }
 
     public float SetHealth(float health)

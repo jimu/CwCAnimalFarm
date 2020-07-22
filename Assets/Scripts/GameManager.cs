@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public enum GameState { Invalid, StartMenu, PauseMenu, FinishMenu, HighScoresMenu, Playing };
+
+    public enum GameState { Invalid, StartMenu, Paused, GameOver, HighScoresMenu, Playing };
     public GameState gameState = GameState.Invalid;
     [SerializeField] EnemySpawner enemySpawner = null;
 
@@ -26,8 +28,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AudioClip playerHurt;
     [SerializeField] public AudioClip playerDead;
     [SerializeField] public AudioClip launch;
+    [SerializeField] public AudioClip sfxOutOfAmmo;
 
     [SerializeField] GameObject gameOverPanel = null;
+    [SerializeField] GameObject pausePanel;
+
+    public GameObject pointsGizmoPrefab;
+    private Pool pointsGizmoPool;
+
+    private GameObject canvas;
 
     private void Awake()
     {
@@ -36,7 +45,16 @@ public class GameManager : MonoBehaviour
         ammoText = GameObject.Find("AmmoText").GetComponent<TextMeshProUGUI>();
         hearts = GameObject.Find("Hearts").GetComponent<Hearts>();
         audioSource = GetComponent<AudioSource>();
-        
+
+        pointsGizmoPool = new Pool(pointsGizmoPrefab, 10);
+
+        canvas = GameObject.Find("Canvas");
+        gameOverPanel?.SetActive(false);
+
+        //pausePanel = Resources.Load<GameObject>("PausePanel");
+        //Debug.Log("pausePanel: " + (pausePanel == null ? "NOT loaded" : "loaded"));
+        //pausePanel.transform.SetParent(canvas.transform);
+
     }
 
     void Start()
@@ -46,15 +64,46 @@ public class GameManager : MonoBehaviour
 
         enemySpawner.StartSpawning();
         SetScore(0);
-        SetAmmo(100);
+        SetAmmo(40);
+        //TODO work on placement
+        /*InstantiatePointsGizmo(11, Vector3.zero);
+        InstantiatePointsGizmo(12, Vector3.one * 100);
+        InstantiatePointsGizmo(13, Vector3.forward * 200);
+        */
+        Time.timeScale = 1.0f;
     }
 
+
+    private void SetGameState(GameState state)
+    {
+        gameState = state;
+        gameOverPanel.SetActive(state == GameState.GameOver);
+        pausePanel.SetActive(state == GameState.Paused);
+
+        Time.timeScale = state == GameState.Playing ? 1f : 0f;
+    }
+
+
+    public void InstantiatePointsGizmo(int value, Vector3 position = default)
+    {
+ //       Debug.Log("InstantiatePointsGizmo(" + value + ")");
+        GameObject gizmo = PointsGizmo.Activate(pointsGizmoPool, value, position);
+        //gizmo.transform.parent = canvas.transform;
+        gizmo.transform.SetParent(canvas.transform, false);
+        // Parent of RectTransform is being set with parent property.
+        // Consider using the SetParent method instead, with the worldPositionStays argument set to false.
+        // This will retain local orientation and scale rather than owrld orientation and scale
+        // which can preven tcommon UI scaling issues
+
+        //TODO move the SetParent call to where the prefabs are Instantiated
+    }
 
     public void AddScore(int n)
     {
         // TODO show score animation
 
         SetScore(score + n);
+        InstantiatePointsGizmo(n);
     }
 
     public void AddAmmo(int n)
@@ -108,5 +157,20 @@ public class GameManager : MonoBehaviour
         if (scoreText != null)
             scoreText.text = score.ToString();
         gameOverPanel?.SetActive(true);
+    }
+
+    public void OnPausePressed()
+    {
+        SetGameState(GameState.Paused);
+    }
+
+    public void OnRestartPressed()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SetGameState(GameState.Playing);
+    }
+    public void OnResumePressed()
+    {
+        SetGameState(GameState.Playing);
     }
 }
