@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     {
         hits = maxHits;
         healthBar.SetHealth(1f);
+        GetComponent<HealthBar>()?.SetEnabled();
     }
 
     public void ApplyDamage(int damage)
@@ -34,11 +35,7 @@ public class Enemy : MonoBehaviour
         hits = Math.Max(0, hits - damage);
 
         if (hits < 1)
-        {
-            gameObject.SetActive(false);
-            gm.AddScore(1);
-            gm.Play(killSound);
-        }
+            SetDying();
         else if (healthBar != null)
         {
             healthBar.SetHealth(hits * 1f / maxHits);
@@ -47,4 +44,16 @@ public class Enemy : MonoBehaviour
 
     }
 
+
+    public void SetDying()
+    {
+        GetComponent<HealthBar>()?.SetEnabled(false);
+
+        //gameObject.SetActive(false);
+        gm.AddScore(value);
+        // TODO show score animation
+        gm.Play(killSound);
+    }
+
 }
+

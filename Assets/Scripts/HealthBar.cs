@@ -57,4 +57,9 @@ public class HealthBar : MonoBehaviour
     {
         return this.health = Mathf.Clamp(health, 0f, 1f);
     }
+
+    public bool SetEnabled(bool enabled = true)
+    {
+        return this.enabled = enabled;
+    }    
 }
