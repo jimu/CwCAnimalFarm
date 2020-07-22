@@ -1544,6 +1544,8 @@ GameObject:
   - component: {fileID: 522888044446714324}
   - component: {fileID: 3645341196043239682}
   - component: {fileID: -1685186884206556226}
+  - component: {fileID: -2246934873722976002}
+  - component: {fileID: -9034809851949446030}
   m_Layer: 0
   m_Name: Animal_Cow_White
   m_TagString: Enemy
@@ -1651,6 +1653,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f312f4635197404a93f588d9ca7de5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2246934873722976002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522888042825835356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543b03e83b8561645abca30a45781b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxTexture: {fileID: 0}
+  health: 1
+--- !u!114 &-9034809851949446030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522888042825835356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9245966412bcdb24c807e905e456a372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hits: 3
+  maxHits: 5
+  speed: 2
+  value: 2
+  hitSound: {fileID: 8300000, guid: 6658d78e339819b4fa31d6f902214a90, type: 3}
+  killSound: {fileID: 8300000, guid: f03fc6ea03396a444bb545d21756f12a, type: 3}
+  escapeSound: {fileID: 8300000, guid: f03fc6ea03396a444bb545d21756f12a, type: 3}
 --- !u!1 &522888042825835468
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,6 +38,7 @@ class Pool
             item.transform.position = position;
             item.transform.rotation = rotation;
             item.SetActive(true);
+            return item;
         }
 
         return null;
@@ -109,18 +110,19 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    public void SpawnEnemy(int type = -1)
     {
-        int enemyType = Random.Range(0, enemyPrefabs.Length);
+        int enemyType = type < 0 ? Random.Range(0, enemyPrefabs.Length) : type;
 
         float xmin, xmax, zmin, zmax;
 
         switch (Random.Range(0, 3))
         {
             case 0: xmin = -40f; xmax = 40f; zmin = zmax = 40f; break; // North
-            case 1: xmin = xmax = -40f; zmin = -10f; zmax = 40f; break; // West
-            default: xmin = xmax = 40f; zmin = -10f; zmax = 40f; break; // East
+            case 1: xmin = xmax = -40f; zmin = 0f; zmax = 40f; break; // West
+            default: xmin = xmax = 40f; zmin = 0f; zmax = 40f; break; // East
         }
+
         Vector3 position = new Vector3(Random.Range(xmin, xmax), 0, Random.Range(zmin, zmax));
         Vector3 target = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 2f));
         Vector3 direction = Vector3.MoveTowards(Vector3.zero, position, 1f);

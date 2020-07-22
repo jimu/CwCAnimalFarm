@@ -75,3 +75,13 @@ InitTestScene*.unity
 tmp
 *.swp
 /media/
+
+Assets/Universal Sound FX.meta
+Assets/Universal Sound FX/
+Packages/docfx.console.2.56.1/
+api/
+articles/
+docfx.json
+index.md
+packages.config
+toc.yml

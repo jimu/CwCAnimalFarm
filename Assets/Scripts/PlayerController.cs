@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     GameManager gm;
 
-    int minX = -10, maxX = 10, minZ = -10, maxZ = 10;
+    int minX = -25, maxX = 25, minZ = -25, maxZ = 25;
 
     [SerializeField] float speed = 10f;
     [SerializeField] float rof = 0.5f;
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     void Fire()
     {
         if (gm.GetAmmo() > 0)
@@ -53,6 +54,8 @@ public class PlayerController : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(transform.forward));
             gm.AddAmmo(-1);
             transform.Translate(transform.forward * -0.1f);  // recoil
+            gm.Play(gm.launch);
+
         }
         else
             Debug.Log("Out of ammo");

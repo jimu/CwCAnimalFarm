@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class DetectCollisions : MonoBehaviour
 {
+    private Enemy enemy;
+    private GameManager gm;
     // Start is called before the first frame update
+    private void Start()
+    {
+        enemy = gameObject.GetComponent<Enemy>();
+        gm = GameManager.instance;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ammo"))
         {
             Destroy(other.gameObject);
-            gameObject.SetActive(false);
-            GameManager.instance.AddScore(1);
+            enemy?.ApplyDamage(1);
         }
         else if (other.CompareTag("Player"))
         {
+            gm.HurtPlayer();
             gameObject.SetActive(false);
-            Debug.Log("Game Over (HIT)");
-            Time.timeScale = 0f;
         }
     }
 }
