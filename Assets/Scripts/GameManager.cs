@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public enum GameState { Invalid, StartMenu, Paused, GameOver, HighScoresMenu, Playing };
+    public enum GameState { Invalid, StartMenu, Paused, GameOver, HighScoresMenu, NewHighScore, Playing };
     public GameState gameState = GameState.Invalid;
     [SerializeField] EnemySpawner enemySpawner = null;
 
@@ -29,9 +29,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AudioClip playerDead;
     [SerializeField] public AudioClip launch;
     [SerializeField] public AudioClip sfxOutOfAmmo;
+    [SerializeField] public AudioClip sfxBadInput;
 
     [SerializeField] GameObject gameOverPanel = null;
-    [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject pausePanel = null;
+    [SerializeField] GameObject titlePanel = null;
+    [SerializeField] GameObject highScoresPanel = null;
+    [SerializeField] GameObject newHighScoreDialog = null;
 
     public GameObject pointsGizmoPrefab;
     private Pool pointsGizmoPool;
@@ -41,36 +45,26 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         ammoText = GameObject.Find("AmmoText").GetComponent<TextMeshProUGUI>();
         hearts = GameObject.Find("Hearts").GetComponent<Hearts>();
+        canvas = GameObject.Find("Canvas");
         audioSource = GetComponent<AudioSource>();
 
         pointsGizmoPool = new Pool(pointsGizmoPrefab, 10);
 
-        canvas = GameObject.Find("Canvas");
-        gameOverPanel?.SetActive(false);
+        SetGameState(GameState.StartMenu);
 
-        //pausePanel = Resources.Load<GameObject>("PausePanel");
-        //Debug.Log("pausePanel: " + (pausePanel == null ? "NOT loaded" : "loaded"));
-        //pausePanel.transform.SetParent(canvas.transform);
-
+        NetworkManager.instance.Fetch();
     }
 
     void Start()
     {
         enemySpawner.SpawnEnemy(0);
-        enemySpawner.SpawnEnemy(0);
-
         enemySpawner.StartSpawning();
         SetScore(0);
         SetAmmo(40);
-        //TODO work on placement
-        /*InstantiatePointsGizmo(11, Vector3.zero);
-        InstantiatePointsGizmo(12, Vector3.one * 100);
-        InstantiatePointsGizmo(13, Vector3.forward * 200);
-        */
-        Time.timeScale = 1.0f;
     }
 
 
@@ -79,6 +73,9 @@ public class GameManager : MonoBehaviour
         gameState = state;
         gameOverPanel.SetActive(state == GameState.GameOver);
         pausePanel.SetActive(state == GameState.Paused);
+        titlePanel.SetActive(state == GameState.StartMenu);
+        highScoresPanel.SetActive(state == GameState.HighScoresMenu);
+        newHighScoreDialog.SetActive(state == GameState.NewHighScore);
 
         Time.timeScale = state == GameState.Playing ? 1f : 0f;
     }
@@ -98,10 +95,13 @@ public class GameManager : MonoBehaviour
         //TODO move the SetParent call to where the prefabs are Instantiated
     }
 
+    public int GetScore()
+    {
+        return score;
+    }
+
     public void AddScore(int n)
     {
-        // TODO show score animation
-
         SetScore(score + n);
         InstantiatePointsGizmo(n);
     }
@@ -156,7 +156,11 @@ public class GameManager : MonoBehaviour
         Text scoreText = gameOverPanel?.transform.Find("ScoreText")?.GetComponent<Text>();
         if (scoreText != null)
             scoreText.text = score.ToString();
-        gameOverPanel?.SetActive(true);
+
+        if (score > 0)
+            SetGameState(GameState.NewHighScore);
+        else
+            SetGameState(GameState.GameOver);
     }
 
     public void OnPausePressed()
@@ -167,10 +171,19 @@ public class GameManager : MonoBehaviour
     public void OnRestartPressed()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        SetGameState(GameState.Playing);
+        //SetGameState(GameState.Playing);  // We never get to this statement!
+    }
+    public void OnStartPressed()
+    {
+        SetGameState(GameState.Playing);  // We never get to this statement!
     }
     public void OnResumePressed()
     {
         SetGameState(GameState.Playing);
     }
+    public void OnHighScoresPressed()
+    {
+        SetGameState(GameState.HighScoresMenu);
+    }
+
 }
