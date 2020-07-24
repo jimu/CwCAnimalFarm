@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
                 transform.LookAt(hit.point);
             }
 
-            if (Time.time > cooldown && Input.GetMouseButton(0))
+            if (Time.time > cooldown && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 cooldown = Time.time + rof;
                 Fire();
@@ -49,10 +50,10 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.P))
                 gm.OnPausePressed();
-            if (Input.GetKeyDown(KeyCode.Minus))
-                gm.HurtPlayer();
-            if (Input.GetKeyDown(KeyCode.Equals))
-                gm.AddScore(1);
+            //if (Input.GetKeyDown(KeyCode.Minus))
+            //    gm.HurtPlayer();
+            //if (Input.GetKeyDown(KeyCode.Equals))
+            //    gm.AddScore(1);
         }
     }
 

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public enum GameState { Invalid, StartMenu, Paused, GameOver, HighScoresMenu, NewHighScore, Playing };
+    public enum GameState { Invalid, StartMenu, Paused, GameOver, Instructions, HighScoresMenu, NewHighScore, Playing };
     public GameState gameState = GameState.Invalid;
     [SerializeField] EnemySpawner enemySpawner = null;
 
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject titlePanel = null;
     [SerializeField] GameObject highScoresPanel = null;
     [SerializeField] GameObject newHighScoreDialog = null;
+    [SerializeField] GameObject pauseButton = null;
+    [SerializeField] GameObject instructionsPanel = null;
 
     public GameObject pointsGizmoPrefab;
     private Pool pointsGizmoPool;
@@ -79,6 +81,8 @@ public class GameManager : MonoBehaviour
         titlePanel.SetActive(state == GameState.StartMenu);
         highScoresPanel.SetActive(state == GameState.HighScoresMenu);
         newHighScoreDialog.SetActive(state == GameState.NewHighScore);
+        pauseButton.SetActive(state == GameState.Playing);
+        instructionsPanel.SetActive(state == GameState.Instructions);
 
         Time.timeScale = state == GameState.Playing ? 1f : 0f;
     }
@@ -204,5 +208,10 @@ public class GameManager : MonoBehaviour
     public void SeeAllHighscoresPressed()
     {
         Application.OpenURL("https://osaka.jimu.net/cwc");
+    }
+
+    public void OnInstructionsButtonPressed()
+    {
+        SetGameState(GameState.Instructions);
     }
 }

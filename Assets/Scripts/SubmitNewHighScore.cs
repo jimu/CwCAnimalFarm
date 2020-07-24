@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SubmitNewHighScore : MonoBehaviour
 {
+    const int MAX_PLAYER_NAME_LENGTH = 15;
+
     [SerializeField] InputField nameInputField = null;
     [SerializeField] Button submitButton = null;
     [SerializeField] Text scoreText = null;
@@ -44,12 +46,18 @@ public class SubmitNewHighScore : MonoBehaviour
         nameInputField.gameObject.SetActive(true);
         nameInputField.Select();
         nameInputField.ActivateInputField();
+        nameInputField.onEndEdit.AddListener(fieldValue =>
+        {
+            OnSubmitButtonPressed();
+        });
     }
 
 
     void ValueChangeCheck()
     {
         submitButton.interactable = nameInputField.text.Length > 2 && nameInputField.text[0] != ' ';
+        if (nameInputField.text.Length > MAX_PLAYER_NAME_LENGTH)
+            nameInputField.text = nameInputField.text.Substring(0, MAX_PLAYER_NAME_LENGTH);
     }
 
     public void OnSubmitButtonPressed()
