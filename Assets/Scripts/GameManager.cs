@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void InstantiatePointsGizmo(int value, Vector3 position = default)
     {
- //       Debug.Log("InstantiatePointsGizmo(" + value + ")");
+        //       Debug.Log("InstantiatePointsGizmo(" + value + ")");
         GameObject gizmo = PointsGizmo.Activate(pointsGizmoPool, value, position);
         //gizmo.transform.parent = canvas.transform;
         gizmo.transform.SetParent(canvas.transform, false);
@@ -198,5 +198,10 @@ public class GameManager : MonoBehaviour
     public string GetPlayerName()
     {
         return PlayerPrefs.GetString("playerName");
+    }
+
+    public void SeeAllHighscoresPressed()
+    {
+        Application.OpenURL("https://osaka.jimu.net/cwc");
     }
 }
