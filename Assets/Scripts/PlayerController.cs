@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.P))
                 gm.OnPausePressed();
+            if (Input.GetKeyDown(KeyCode.Minus))
+                gm.HurtPlayer();
+            if (Input.GetKeyDown(KeyCode.Equals))
+                gm.AddScore(1);
         }
     }
 

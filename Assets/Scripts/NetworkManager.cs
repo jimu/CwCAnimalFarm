@@ -48,11 +48,11 @@ public class NetworkManager : MonoBehaviour
             yield return request.SendWebRequest();
             callback(request);
         }
-    }
+    }  
 
     public void Fetch(bool force = false)
     {
-        Debug.Log("Fetch(): nextFetch=" + nextFetch + " Time.time=" + Time.time + " fetching=" + (fetching ? "T" : "F"));
+        //Debug.Log("Fetch(): nextFetch=" + nextFetch + " Time.time=" + Time.time + " fetching=" + (fetching ? "T" : "F"));
         if (!fetching && (nextFetch < Time.realtimeSinceStartup || force))
         {
             fetching = true;
@@ -64,12 +64,12 @@ public class NetworkManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(req.downloadHandler.text);
+                    //Debug.Log(req.downloadHandler.text);
                     string[] rows = req.downloadHandler.text.Split('|');
                     scores = new HighScore[rows.Length / 2];
                     for (int i = 0; i < rows.Length - 2; i += 2)
                     {
-                        Debug.Log("i=" + i + " scores.Length=" + scores.Length + " rows.Length=" + rows.Length + " scores.Length=" + scores.Length);
+                        //Debug.Log("i=" + i + " scores.Length=" + scores.Length + " rows.Length=" + rows.Length + " scores.Length=" + scores.Length);
                         string n = rows[i];
                         string s = rows[i + 1];
                         scores[i / 2] = new HighScore(rows[i], rows[i + 1]);
@@ -85,6 +85,7 @@ public class NetworkManager : MonoBehaviour
     }
     public void SumbitScore(string name, int score)
     {
+        // git hub users: please don't abuse this
         string url = "https://osaka.jimu.net/cwc/savescores.php?name=" + name + "&score=" + score;
         Debug.Log("SubmitScore(" + name + ")");
         Post(url);

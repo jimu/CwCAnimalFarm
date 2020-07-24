@@ -83,7 +83,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 direction = Vector3.MoveTowards(Vector3.zero, position, 1f);
         Quaternion rotation = Quaternion.LookRotation(target - position);
         enemyPool[enemyType].Activate(position, rotation);
-        Debug.Log("Instantiated " + enemyType + "\n P(" + position + ")\n D(" + direction + ") R(" + rotation + ")");
+       // Debug.Log("Instantiated " + enemyType + "\n P(" + position + ")\n D(" + direction + ") R(" + rotation + ")");
     }
 
 }

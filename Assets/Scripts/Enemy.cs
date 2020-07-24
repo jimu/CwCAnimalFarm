@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
         healthBar.SetHealth(1f);
         Walk();
         GetComponent<HealthBar>()?.SetEnabled();
-        Debug.Log("OnEnable");
     }
 
     public void ApplyDamage(int damage)

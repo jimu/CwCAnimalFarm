@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("GameManager Awake");
         instance = this;
 
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void SetGameState(GameState state)
     {
+        Debug.Log("SetGameState(" + state + ")");
         gameState = state;
         gameOverPanel.SetActive(state == GameState.GameOver);
         pausePanel.SetActive(state == GameState.Paused);
@@ -186,4 +188,15 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.HighScoresMenu);
     }
 
+
+    public string SavePlayerName(string name)
+    {
+        PlayerPrefs.SetString("playerName", name);
+        return name;
+    }
+
+    public string GetPlayerName()
+    {
+        return PlayerPrefs.GetString("playerName");
+    }
 }

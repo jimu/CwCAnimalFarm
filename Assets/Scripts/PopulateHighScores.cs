@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class PopulateHighScores : MonoBehaviour
 {
-    [SerializeField] Text ranksText = null;
+    [SerializeField] GameObject ranksColumn = null;
     [SerializeField] Text namesText = null;
     [SerializeField] Text scoresText = null;
     [SerializeField] Text loadingText = null;
 
     public void OnEnable()
     {
-        Debug.Log("OnEnable called");
+        Debug.Log("PHS OnEnable called");
         if (NetworkManager.instance)
         {
             NetworkManager.instance.Listen(this);
@@ -27,7 +27,7 @@ public class PopulateHighScores : MonoBehaviour
 
     public bool ShowScores()
     {
-        Debug.Log("ShowScores() called");
+        //Debug.Log("ShowScores() called");
         NetworkManager nm = NetworkManager.instance;
 
         nm.Fetch();
@@ -38,9 +38,9 @@ public class PopulateHighScores : MonoBehaviour
 
         if (nm != null)
         {
-            Debug.Log("nm.scoresReady:" + nm.scoresReady);
+            //Debug.Log("nm.scoresReady:" + nm.scoresReady);
 
-            ranksText.gameObject.SetActive(nm.scoresReady);
+            ranksColumn.SetActive(nm.scoresReady);
             namesText.gameObject.SetActive(nm.scoresReady);
             scoresText.gameObject.SetActive(nm.scoresReady);
             loadingText.gameObject.SetActive(!nm.scoresReady);
@@ -56,7 +56,7 @@ public class PopulateHighScores : MonoBehaviour
 
                 if (names.Length > 0)
                 {
-                    ranksText.text = ranks.Substring(0, ranks.Length - 1);
+                    ranksColumn.GetComponent<Text>().text = ranks.Substring(0, ranks.Length - 1);
                     namesText.text = names.Substring(0, names.Length - 1);
                     scoresText.text = scores.Substring(0, scores.Length - 1);
                 }
