@@ -57,11 +57,12 @@ public class GameManager : MonoBehaviour
 
         SetGameState(GameState.StartMenu);
 
-        NetworkManager.instance.Fetch();
     }
 
     void Start()
     {
+        NetworkManager.instance.Fetch();
+
         enemySpawner.SpawnEnemy(0);
         enemySpawner.StartSpawning();
         SetScore(0);
