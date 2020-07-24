@@ -4,15 +4,30 @@ using UnityEngine;
 // needs to be a MonoBehavior to use StartCoroutine
 public class EnemySpawner : MonoBehaviour
 {
+    const float NORMAL_MIN_DELAY = 0.2f;
+    const float NORMAL_MAX_DELAY = 4f;
+    const float HYPER_MAX_DELAY  = 0.5f;
+    const float HYPER_MULTIPLIER = 1.2f;
+    const float HYPER_MAX_MULTIPIER = 10f;
+
+
     [SerializeField]
     public GameObject[] enemyPrefabs;
     [SerializeField] int poolSize = 4;
-    public float minDelay = 0.2f;
-    public float maxDelay = 4f;
+    public float minDelay = NORMAL_MIN_DELAY;
+    public float maxDelay = NORMAL_MAX_DELAY;
 
     List<Pool> enemyPool;
 
+    private float hyperSpeedMultiplier = 1f;
+
     bool spawning = false;
+
+    public void SetMurderMode(bool murder = true)
+    {
+        maxDelay = murder ? HYPER_MAX_DELAY : NORMAL_MAX_DELAY;
+        hyperSpeedMultiplier = murder ? HYPER_MULTIPLIER : 1f;
+    }
 
     /// <summary>
     /// creates pool for each enemy.
@@ -26,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
         enemyPool = new List<Pool>();//[enemyPrefabs.Length];
         for(int i=0; i < enemyPrefabs.Length; ++i)
             enemyPool.Add(new Pool(enemyPrefabs[i], poolSize));
+        SetMurderMode(false);
     }
 
     /// <summary>
@@ -82,8 +98,14 @@ public class EnemySpawner : MonoBehaviour
         Vector3 target = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 2f));
         Vector3 direction = Vector3.MoveTowards(Vector3.zero, position, 1f);
         Quaternion rotation = Quaternion.LookRotation(target - position);
-        enemyPool[enemyType].Activate(position, rotation);
-       // Debug.Log("Instantiated " + enemyType + "\n P(" + position + ")\n D(" + direction + ") R(" + rotation + ")");
+        GameObject enemy = enemyPool[enemyType].Activate(position, rotation);
+        // Debug.Log("Instantiated " + enemyType + "\n P(" + position + ")\n D(" + direction + ") R(" + rotation + ")");
+
+        if (maxDelay == HYPER_MAX_DELAY && enemy != null)
+        {
+            enemy.GetComponent<Enemy>().speed *= hyperSpeedMultiplier;
+            hyperSpeedMultiplier = Mathf.Min(hyperSpeedMultiplier * HYPER_MULTIPLIER, HYPER_MAX_MULTIPIER) ;
+        }
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,9 @@ public class Quotes : MonoBehaviour
 {
     static readonly string[] quotes =
     {
-        "Four legs good, two legs bad",
+        "Please turn sound on!",
         "All animals are equal, but some animals are more equal than others",
+        "Four legs good, two legs bad",
         "I will work harder – Boxer",
         "No sentimentality, comrade! – Snowball",
         "Napoleon is always right – Boxer",
@@ -24,30 +26,40 @@ public class Quotes : MonoBehaviour
         "The only good human being is a dead one"
     };
 
-    [SerializeField] Text quoteText;
-    int nextQuote = 0;
-    float nextTime = 0;
+    Text quoteText = null;
+    static int quoteIndex = 0;
+    static float nextTime = 10f;
 
     const float QUOTE_DURATION = 10f;
 
     void Start()
     {
-        ChangeQuote();        
+        quoteText = GetComponent<Text>();
+        ShowQuote();
     }
 
     private void OnEnable()
     {
-        ChangeQuote();
+        if (!ChangeQuote())
+            ShowQuote();
     }
 
-    private void ChangeQuote(bool force = false)
+    private bool ChangeQuote(bool force = false)
     {
         if (Time.realtimeSinceStartup > nextTime || force)
         {
-            quoteText.text = quotes[nextQuote];
-            nextQuote = (nextQuote + 1) % quotes.Length;
+            quoteIndex = (quoteIndex + 1) % quotes.Length;
             nextTime = Time.realtimeSinceStartup + QUOTE_DURATION;
+            ShowQuote();
+            return true;
         }
+        return false;
+    }
+
+    private void ShowQuote()
+    {
+        //quoteText.text = quotes[quoteIndex];
+        ToolTip.SetDefaultTip(quotes[quoteIndex]);
     }
 
     private void Update()

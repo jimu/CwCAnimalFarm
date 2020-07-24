@@ -6,27 +6,34 @@ using UnityEngine.UI;
 
 public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] Text statusBar = null;
     [SerializeField] string tip = "";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    static string defaultTip = "";
+    static Color bold = new Color(1f, 1f, 1f);
+    static Color gray = new Color(0.7f, 0.7f, 0.7f);
+    static Color gold = new Color(1f, 0.9f, 0f);
+    static ToolTip instance = null;
 
-    // Update is called once per frame
-    void Update()
+
+    public static void SetDefaultTip(string tip)
     {
-        
+        defaultTip = tip;
+        Text statusText = GameManager.instance.statusBar;
+        if (statusText != null && statusText.color != bold)
+        {
+            statusText.text = defaultTip;
+            statusText.color = defaultTip == "Please turn sound on!" ? gold : gray;
+        }
     }
 
     public void OnPointerEnter(PointerEventData data)
     {
-        statusBar.text = tip;
+        GameManager.instance.statusBar.color = bold;
+        GameManager.instance.statusBar.text = tip;
     }
     public void OnPointerExit(PointerEventData data)
     {
-        statusBar.text = "";
+        GameManager.instance.statusBar.color = gray;
+        GameManager.instance.statusBar.text = defaultTip;
     }
 }

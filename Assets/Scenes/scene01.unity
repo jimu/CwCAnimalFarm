@@ -869,7 +869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: -11.8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &277524944
@@ -1870,6 +1870,7 @@ MonoBehaviour:
   newHighScoreDialog: {fileID: 1474219839}
   pauseButton: {fileID: 113156484}
   instructionsPanel: {fileID: 1689388849}
+  statusBar: {fileID: 1156985491}
   pointsGizmoPrefab: {fileID: 7766846401638769351, guid: deb0987d68c251749bccc3d8ca67806a,
     type: 3}
 --- !u!4 &555439346
@@ -2716,7 +2717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: 0, y: -37.7}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &929068836
@@ -2845,7 +2846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05b1d749ea5fb2439ae651f742301af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBar: {fileID: 1156985491}
   tip: Learn controls and keys used to play the game
 --- !u!114 &1045427841
 MonoBehaviour:
@@ -3413,7 +3413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
+  m_Color: {r: 1, g: 0.80577135, b: 0.1745283, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -3584,7 +3584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05b1d749ea5fb2439ae651f742301af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBar: {fileID: 1156985491}
   tip: Demo mode showcases all features immediately without unlocking them through
     gameplay [TBD]
 --- !u!1 &1311125430
@@ -5661,7 +5660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05b1d749ea5fb2439ae651f742301af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBar: {fileID: 1156985491}
   tip: Show leaderboard for this version of Animal Farm
 --- !u!1 &1900301241
 GameObject:
@@ -5884,7 +5882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05b1d749ea5fb2439ae651f742301af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBar: {fileID: 1156985491}
   tip: The animals are revolting!
 --- !u!1 &1987826753
 GameObject:
@@ -6155,7 +6152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -124.08}
+  m_AnchoredPosition: {x: 0, y: -133.9}
   m_SizeDelta: {x: 210, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2042878317
@@ -6171,7 +6168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6190,7 +6187,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Four legs good, two legs bad.
+  m_Text: 'v0.0.2 2020-07-24 jimu
+
+'
 --- !u!222 &2042878318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6211,7 +6210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb703a1843d8cc44c97edcf654e37934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quoteText: {fileID: 2042878317}
 --- !u!1 &2124308618
 GameObject:
   m_ObjectHideFlags: 0

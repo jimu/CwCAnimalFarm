@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject newHighScoreDialog = null;
     [SerializeField] GameObject pauseButton = null;
     [SerializeField] GameObject instructionsPanel = null;
+    [SerializeField] public Text statusBar = null;
 
     public GameObject pointsGizmoPrefab;
     private Pool pointsGizmoPool;
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         enemySpawner.StartSpawning();
         SetScore(0);
         SetAmmo(40);
+        ammoText.color = Color.white;
     }
 
 
@@ -113,9 +115,9 @@ public class GameManager : MonoBehaviour
         InstantiatePointsGizmo(n);
     }
 
-    public void AddAmmo(int n)
+    public int AddAmmo(int n)
     {
-        SetAmmo(ammo + n);
+        return SetAmmo(ammo + n);
     }
 
     public int GetAmmo()
@@ -129,11 +131,21 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         return score;
     }
-    public void SetAmmo(int n)
+    public int SetAmmo(int n)
     {
         ammo = n;
-        ammoText.text = ammo.ToString();
+
+        if (n > 0)
+            ammoText.text = ammo.ToString();
+        else
+        {
+            ammoText.text = "0 EMPTY!";
+            ammoText.color = ammoText.color == Color.red;
+            enemySpawner.SetMurderMode();
+        }
+        return ammo;
     }
+
 
     public void Play(AudioClip clip)
     {
