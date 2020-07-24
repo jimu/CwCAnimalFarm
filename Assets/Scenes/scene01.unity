@@ -4090,7 +4090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1575208630
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6131,6 +6131,7 @@ GameObject:
   - component: {fileID: 2042878316}
   - component: {fileID: 2042878318}
   - component: {fileID: 2042878317}
+  - component: {fileID: 2042878319}
   m_Layer: 5
   m_Name: Quote
   m_TagString: Untagged
@@ -6198,6 +6199,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042878315}
   m_CullTransparentMesh: 0
+--- !u!114 &2042878319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042878315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb703a1843d8cc44c97edcf654e37934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quoteText: {fileID: 2042878317}
 --- !u!1 &2124308618
 GameObject:
   m_ObjectHideFlags: 0
