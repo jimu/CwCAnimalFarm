@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class DestroyOutOfBounds : MonoBehaviour
 {
     float minX = -41f, maxX = 41f;
-    float minZ = -5f, maxZ = 41f;
+    float minZ = -25f, maxZ = 41f;
     float minY = -8f;
 
     // Start is called before the first frame update

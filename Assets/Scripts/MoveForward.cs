@@ -19,9 +19,15 @@ public class MoveForward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy!= null && enemy.hits <= 0)
+        if (enemy != null && enemy.hits <= 0)
             transform.Translate(Vector3.down * Time.deltaTime * downSpeed);
         else if (enemy == null || !enemy.eating)
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        {
+            Vector3 dest = transform.position + transform.forward;
+            dest.y = Terrain.activeTerrain.SampleHeight(dest);
+            transform.position = Vector3.MoveTowards(transform.position, dest, Time.deltaTime * speed);
+            // transform.Translate(Vector3.forward * Time.deltaTime * speed);
+
+        }
     }
 }
