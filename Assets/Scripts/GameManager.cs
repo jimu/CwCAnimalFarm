@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
         else
         {
             ammoText.text = "0 EMPTY!";
-            ammoText.color = ammoText.color == Color.red;
+            ammoText.color = Color.red;
             enemySpawner.SetMurderMode();
         }
         return ammo;
