@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,21 +9,22 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public enum GameState { Invalid, StartMenu, Paused, GameOver, Instructions, HighScoresMenu, NewHighScore, Playing };
+    public enum GameState { Invalid, StartMenu, Paused, GameOver, Instructions, HighScoresMenu, NewHighScore, EasterEgg, Playing };
     public GameState gameState = GameState.Invalid;
     [SerializeField] EnemySpawner enemySpawner = null;
 
     private int score = 0;
     [SerializeField] TextMeshProUGUI scoreText;
 
-    private int ammo = 0;
+    [SerializeField] int[] ammo = { 40, 0 };
     [SerializeField] TextMeshProUGUI ammoText;
 
     public static GameManager instance;
 
-    private int playerHits = 3;
+    public int playerHits = 3;
 
     private Hearts hearts;
+    private Hearts bones;
 
     private AudioSource audioSource;
     [SerializeField] public AudioClip playerHurt;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject newHighScoreDialog = null;
     [SerializeField] GameObject pauseButton = null;
     [SerializeField] GameObject instructionsPanel = null;
+    [SerializeField] GameObject easterEggPanel = null;
     [SerializeField] public Text statusBar = null;
 
     public GameObject pointsGizmoPrefab;
@@ -53,6 +56,8 @@ public class GameManager : MonoBehaviour
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         ammoText = GameObject.Find("AmmoText").GetComponent<TextMeshProUGUI>();
         hearts = GameObject.Find("Hearts").GetComponent<Hearts>();
+        bones = GameObject.Find("Bones").GetComponent<Hearts>();
+
         canvas = GameObject.Find("Canvas");
         audioSource = GetComponent<AudioSource>();
 
@@ -69,7 +74,8 @@ public class GameManager : MonoBehaviour
         enemySpawner.SpawnEnemy(0);
         enemySpawner.StartSpawning();
         SetScore(0);
-        SetAmmo(40);
+        SetAmmo(0, 40);
+        SetAmmo(1, 0);
         ammoText.color = Color.white;
     }
 
@@ -84,6 +90,7 @@ public class GameManager : MonoBehaviour
         highScoresPanel.SetActive(state == GameState.HighScoresMenu);
         newHighScoreDialog.SetActive(state == GameState.NewHighScore);
         pauseButton.SetActive(state == GameState.Playing);
+        easterEggPanel.SetActive(state == GameState.EasterEgg);
         instructionsPanel.SetActive(state == GameState.Instructions);
 
         Time.timeScale = state == GameState.Playing ? 1f : 0f;
@@ -115,15 +122,19 @@ public class GameManager : MonoBehaviour
         InstantiatePointsGizmo(n);
     }
 
-    public int AddAmmo(int n)
+    public int AddAmmo(int type, int n)
     {
-        return SetAmmo(ammo + n);
+        return SetAmmo(type, ammo[type] + n);
     }
 
-    public int GetAmmo()
+    public int GetAmmo(int type)
     {
-        return ammo;
+        return ammo[type];
     }
+
+
+
+
 
     public int SetScore(int n)
     {
@@ -131,19 +142,27 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         return score;
     }
-    public int SetAmmo(int n)
+    public int SetAmmo(int type, int n)
     {
-        ammo = n;
+        Debug.Log("SetAmmo(" + type + ", " + n + ")");
+        ammo[type] = n;
 
-        if (n > 0)
-            ammoText.text = ammo.ToString();
+        if (type == 0)
+        {
+            if (n > 0)
+                ammoText.text = ammo[type].ToString();
+            else
+            {
+                ammoText.text = "0 EMPTY!";
+                ammoText.color = Color.red;
+                enemySpawner.SetMurderMode();
+            }
+        }
         else
         {
-            ammoText.text = "0 EMPTY!";
-            ammoText.color = Color.red;
-            enemySpawner.SetMurderMode();
+            bones.Number = ammo[type];
         }
-        return ammo;
+        return n;
     }
 
 
@@ -161,7 +180,8 @@ public class GameManager : MonoBehaviour
         if (playerHits <= 0)
         {
             Play(playerDead);
-            GameOver();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("Death_b", true);
+            Invoke("GameOver", 2.0f);
         }
         else if (playSound)
             Play(playerHurt);
@@ -205,6 +225,14 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.HighScoresMenu);
     }
 
+    public void OnEasterEggPressed()
+    {
+        SetGameState(GameState.EasterEgg);
+    }
+    public void GimmieAnotherHint()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=-GL5lzMJomY");
+    }
 
     public string SavePlayerName(string name)
     {

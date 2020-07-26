@@ -13,25 +13,30 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float speed = 10f;
     [SerializeField] float rof = 0.5f;
-    [SerializeField] Transform bulletPrefab = null;
+    [SerializeField] Transform[] bulletPrefab = null;
     [SerializeField] float recoil = -0.25f;
     Vector3 ammoHeight = Vector3.up * 0.25f;
     float cooldown = 0f;
+    Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.instance;
+        animator = GetComponent<Animator>();
+        animator.SetBool("Static_b", true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale > 0.1f)
+        if (Time.timeScale > 0.1f && gm.playerHits > 0)
         {
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
+
+            animator.SetFloat("Speed_f", Mathf.Abs(h) + Mathf.Abs(v));
 
             float x = Mathf.Clamp(transform.position.x + h * Time.deltaTime * speed, minX, maxX);
             float z = Mathf.Clamp(transform.position.z + v * Time.deltaTime * speed, minZ, maxZ);
@@ -47,13 +52,16 @@ public class PlayerController : MonoBehaviour
                 transform.LookAt(lookAt);
             }
 
-            if (Time.time > cooldown && Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Time.time > cooldown && !EventSystem.current.IsPointerOverGameObject())
             {
-                cooldown = Time.time + rof;
-                Fire();
+                if (Input.GetMouseButton(0))
+                    Fire(0);
+                else if (Input.GetMouseButtonDown(1))
+                    Fire(1);
             }
-//            Debug.DrawRay(transform.position, transform.forward* 5, Color.green);
-//            Debug.DrawRay(transform.position, transform.forward * -2, Color.red);
+
+            //            Debug.DrawRay(transform.position, transform.forward* 5, Color.green);
+            //            Debug.DrawRay(transform.position, transform.forward * -2, Color.red);
 
             if (Input.GetKeyDown(KeyCode.P))
                 gm.OnPausePressed();
@@ -65,9 +73,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Fire()
+    void Fire(int type)
     {
-        if (gm.GetAmmo() > 0)
+        Debug.Log("Fire(" + type + ")");
+        cooldown = Time.time + rof;
+
+        if (gm.GetAmmo(type) > 0)
         {
 
             Vector3 p = transform.position;
@@ -76,13 +87,13 @@ public class PlayerController : MonoBehaviour
 
             facing.y = 0f;
 
-            var bullet = Instantiate(bulletPrefab, p, Quaternion.LookRotation(facing));
-            gm.AddAmmo(-1);
+            var bullet = Instantiate(bulletPrefab[type], p, Quaternion.LookRotation(facing));
+            gm.AddAmmo(type, -1);
             transform.Translate(transform.forward * recoil, Space.World);  // recoil
             gm.Play(gm.launch);
 
         }
-        else
+        else if (type == 0) // only regular ammo
         {
             Debug.Log("Out of ammo");
             gm.Play(gm.sfxOutOfAmmo);

@@ -12,7 +12,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     static Color bold = new Color(1f, 1f, 1f);
     static Color gray = new Color(0.7f, 0.7f, 0.7f);
     static Color gold = new Color(1f, 0.9f, 0f);
-    static ToolTip instance = null;
+    //static ToolTip instance = null;
 
 
     public static void SetDefaultTip(string tip)

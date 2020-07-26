@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Hearts : MonoBehaviour
 {
-    [SerializeField]
-    private int number;
+
+    [SerializeField] private int number;
+    [SerializeField] private int width;
 
     private RectTransform rectTransform;
 
@@ -19,7 +20,7 @@ public class Hearts : MonoBehaviour
         get { return number; }
         set {
             number = value;
-            rectTransform.sizeDelta = new Vector2(55 * number, 40);
+            rectTransform.sizeDelta = new Vector2(width * number, 40);  //hearts=55, bones=13
         }
     }
 }

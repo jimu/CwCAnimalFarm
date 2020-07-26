@@ -27,8 +27,6 @@ public class SubmitNewHighScore : MonoBehaviour
     private void Start()
     {
         Init();
-        Debug.Log("SubmitNewHighScore.Start");
-        Debug.Log("  Start GM=" + GameManager.instance == null ? "NULL" : "NOTNULL");
     }
 
     private void OnEnable()
@@ -42,7 +40,6 @@ public class SubmitNewHighScore : MonoBehaviour
     {
         nameInputField.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         nameInputField.text = gm.GetPlayerName();
-        Debug.Log("Set Listener");
         nameInputField.gameObject.SetActive(true);
         nameInputField.Select();
         nameInputField.ActivateInputField();

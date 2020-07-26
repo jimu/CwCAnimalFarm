@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class BoneController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] AudioClip sfxPickUp = null;
+    static private bool bonusBonesRevealed = false;
+    [SerializeField] private GameObject[] bonusBones;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            if (!bonusBonesRevealed)
+                RevealBonusBones();
+
+            GameManager.instance.Play(sfxPickUp);
+            GameManager.instance.AddAmmo(1, 1);
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void RevealBonusBones()
     {
-        
+        bonusBonesRevealed = true;
+
+        foreach (var obj in bonusBones)
+            obj.SetActive(true);
+
     }
 }
